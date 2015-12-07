@@ -3,7 +3,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using Galaxy.Core.Actors;
 using Galaxy.Core.Collision;
@@ -65,7 +64,6 @@ namespace Galaxy.Environments
                 //присваиваем значение Ship куда он должен лететь true false
 
                 ship3.Movement = i < 2; 
-               
                 Actors.Add(ship3);
             }
 
@@ -88,40 +86,32 @@ namespace Galaxy.Environments
 
         #region Overrides
 
-        public void BShots()
+        private void b_shots()
         {
-            if (Shot.ElapsedMilliseconds < 1000)
+            if (shot.ElapsedMilliseconds < 1000)
                 return;
+            var enbull = new EnemyBullet(this);
+            var enlis = Actors.Where((actor) => actor is Ship).ToList();
 
-            var bR = new BulletER(this);
-
-            var lis = Actors.Where((actor) => actor is Ship).ToList();
-
-            if (lis.Count() > 0)
+            if (enlis.Count() > 0)
             {
                 Random rd = new Random();
-                int a = rd.Next(lis.Count());
+                int a = rd.Next(enlis.Count());
+                var mission = enlis[a].Position;
+                enbull.Position = new Point(mission.X, mission.Y + 10);
 
-                var mission = lis[a].Position;
-
-                bR.Position = new Point(mission.X, mission.Y + 10);
-
-                bR.Load();
-
-                Actors.Add(bR);
-
-                Shot.Restart();
+                enbull.Load();
+                Actors.Add(enbull);
+                shot.Restart();
             }
         }
 
        private void h_dispatchKey()
         {
             if (!IsPressed(VirtualKeyStates.Space)) return;
-
             if (m_frameCount % 10 != 0) return;
-
-
-            Bullet bullet = new Bullet(this)
+            
+           Bullet bullet = new Bullet(this)
             {
                 Position = Player.Position
             };
@@ -135,15 +125,13 @@ namespace Galaxy.Environments
             return new StartScreen();
         }
 
-        
-
-        private Stopwatch Shot = new Stopwatch();
+        private Stopwatch shot = new Stopwatch();
 
        public override void Update()
         {
             m_frameCount++;
             h_dispatchKey();
-            BShots();
+            b_shots();
             base.Update();
 
 
@@ -170,14 +158,14 @@ namespace Galaxy.Environments
             }
 
             if (Actors.All(actor => actor.ActorType != ActorType.Enemy))
-            //if (Actors.Where((actor) => actor is Ship).ToList().Count == 0)
+            
                 Success = true;
         }
 
         public override void Load()
         {
             base.Load();
-            Shot.Start();
+            shot.Start();
         }
 
         #endregion

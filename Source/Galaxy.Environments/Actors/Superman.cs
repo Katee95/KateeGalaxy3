@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using System.Diagnostics;
 using Galaxy.Core.Actors;
 using Galaxy.Core.Environment;
 using Point = System.Drawing.Point;
-using Size = System.Drawing.Size;
+
 
 namespace Galaxy.Environments.Actors
 {
@@ -16,8 +11,7 @@ namespace Galaxy.Environments.Actors
     {
         #region Constant
 
-        private const int MaxSpeed = 1;
-        private const long StartFlyMs = 2000;
+     private const long StartFlyMs = 2000;
 
         #endregion
 

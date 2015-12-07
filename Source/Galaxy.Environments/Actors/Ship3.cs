@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using System.Diagnostics;
 using Galaxy.Core.Actors;
 using Galaxy.Core.Environment;
 using Point = System.Drawing.Point;
-using Size = System.Drawing.Size;
+
 
 namespace Galaxy.Environments.Actors
 {
@@ -15,8 +11,7 @@ namespace Galaxy.Environments.Actors
     {
         #region Constant
 
-        private const int MaxSpeed = 3;
-        private const long StartFlyMs = 2000;
+        private const long startFlyMs = 2000;
         private bool sign;
 
         #endregion
@@ -56,7 +51,7 @@ namespace Galaxy.Environments.Actors
 
             if (!m_flying)
             {
-                if (m_flyTimer.ElapsedMilliseconds <= StartFlyMs) return;
+                if (m_flyTimer.ElapsedMilliseconds <= startFlyMs) return;
 
                 m_flyTimer.Stop();
                 m_flyTimer = null;
@@ -89,13 +84,12 @@ namespace Galaxy.Environments.Actors
 
         private void h_changePosition()
         {
-            int i;
-            i = Movement ? 3 : - 3;
+            int mov;
+            mov = Movement ? 3 : - 3;
 
-            Position = new Point(Position.X + i, Position.Y + 3);
+            Position = new Point(Position.X + mov, Position.Y + 3);
             
-
-            #endregion
+        #endregion
         }
     }
 }

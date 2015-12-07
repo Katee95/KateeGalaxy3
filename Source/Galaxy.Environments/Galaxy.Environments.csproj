@@ -44,7 +44,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actors\BulletER.cs" />
+    <Compile Include="Actors\EnemyBullet.cs" />
     <Compile Include="Actors\Player.cs" />
     <Compile Include="Actors\Ship2.cs" />
     <Compile Include="Actors\Ship.cs" />
